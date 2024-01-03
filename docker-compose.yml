@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  redis-cache:
+    image: redis:7.2.3
+    #image: redis:7.2.3-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 300  1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    container_name: redis-cache
+    hostname: redis-cache
+    volumes: 
+      - cache:/data
+volumes:
+  cache:
+    driver: local

@@ -38,7 +38,7 @@ public class RateLimiteDbContext : DbContext
               {
                   Id = 3,
                   PermitLimit = 3,
-                  QueueLimit = 0,
+                  QueueLimit = 3,
                   Window = TimeSpan.FromSeconds(1),
               });
 

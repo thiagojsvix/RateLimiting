@@ -7,9 +7,9 @@ namespace WebApi.Extensions;
 
 public static class RedisExtension
 {
-    private static EndPointCollection endPoints = new() { { "localhost", 6379 } };
+    private static readonly EndPointCollection endPoints = new() { { "localhost", 6379 } };
 
-    private static ConfigurationOptions options = new()
+    private static readonly ConfigurationOptions options = new()
     {
         EndPoints = endPoints,                                               // Lista de Endereço dos servidores redis
         User = "default",                                                    // Use seu usuário redis. Para mais informações consulte o site https://redis.io/docs/management/security/acl/
@@ -20,8 +20,6 @@ public static class RedisExtension
                                                                              // quando necessário usar o redis novamente automaticamente a conexão será reestabelecida.
 
     };
-
-    private static X509Certificate2 certificate = GetCertificateFromThubprint();
 
     private static X509Certificate2 GetCertificateFromThubprint()
     {
@@ -38,7 +36,7 @@ public static class RedisExtension
         return certLocalMachineCollection[0];
     }
 
-    private static bool ValidateServerCertificate(object sender, X509Certificate? certificate, X509Chain? chain, SslPolicyErrors sslPolicyErrors)
+    private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
     {
         if (certificate == null)
             return false;
@@ -54,8 +52,11 @@ public static class RedisExtension
         return false;
     }
 
-    private static X509Certificate Load_CertificateSelection(object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
+    private static X509Certificate2 Load_CertificateSelection(object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
     {
+        var certificate = GetCertificateFromThubprint();
+
+
         if (certificate == null)
         {
             return new X509Certificate2("redis.pfx", "redis-certificado-senha"); // use the password you specified for pfx file

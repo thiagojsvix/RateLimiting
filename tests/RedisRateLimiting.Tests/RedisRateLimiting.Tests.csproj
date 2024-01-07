@@ -10,9 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Abstracta.JmeterDsl" Version="0.3.2" />
     <PackageReference Include="AspNetCoreRateLimit.Redis" Version="2.0.0" />
     <PackageReference Include="RedisRateLimiting.AspNetCore" Version="1.1.0" />
-    
+
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />

@@ -3,10 +3,11 @@
 using FluentAssertions;
 
 using Microsoft.AspNetCore.Mvc.Testing;
+
 using RedisRateLimiting.Tests.Common;
 
 #pragma warning disable xUnit1031 // Do not use blocking task operations in test method
-namespace RedisRateLimiting.Tests;
+namespace RedisRateLimiting.Tests.Basic;
 
 [Collection("Seq")]
 public class ClientIdPolicyIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
@@ -21,7 +22,7 @@ public class ClientIdPolicyIntegrationTests : IClassFixture<WebApplicationFactor
         {
             BaseAddress = new Uri("https://localhost:7255"),
         });
-        
+
         _request = new Request(_httpClient, _apiPath);
     }
 
@@ -34,7 +35,7 @@ public class ClientIdPolicyIntegrationTests : IClassFixture<WebApplicationFactor
     {
         var tasks = new List<Task<RateLimitResponse>>();
         var extra = 2;
-        
+
         _request.AddHeader("X-ClientId", clientId);
 
         for (var i = 0; i < permitLimit + extra; i++)
@@ -46,5 +47,18 @@ public class ClientIdPolicyIntegrationTests : IClassFixture<WebApplicationFactor
 
         tasks.Count(x => x.Result.StatusCode == HttpStatusCode.OK).Should().Be(permitLimit);
         tasks.Count(x => x.Result.StatusCode == HttpStatusCode.TooManyRequests).Should().Be(extra);
+    }
+
+    [Fact]
+    public async Task Test()
+    {
+        //arrange
+        _request.AddHeader("X-ClientId", "client3");
+
+        //act
+        var result = await _request.MakeAsync();
+                
+        //assert
+        result.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

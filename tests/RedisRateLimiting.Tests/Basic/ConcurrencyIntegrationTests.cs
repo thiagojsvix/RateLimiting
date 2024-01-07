@@ -3,11 +3,10 @@
 using FluentAssertions;
 
 using Microsoft.AspNetCore.Mvc.Testing;
-
 using RedisRateLimiting.Tests.Common;
 
 #pragma warning disable xUnit1031 // Do not use blocking task operations in test method
-namespace RedisRateLimiting.Tests;
+namespace RedisRateLimiting.Tests.Basic;
 
 [Collection("Seq")]
 public class ConcurrencyIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
@@ -41,7 +40,7 @@ public class ConcurrencyIntegrationTests : IClassFixture<WebApplicationFactory<P
 
         tasks.Count(x => x.Result.StatusCode == HttpStatusCode.TooManyRequests).Should().Be(3);
         tasks.Count(x => x.Result.StatusCode == HttpStatusCode.OK).Should().Be(2);
-        
+
         tasks.Count(x => x.Result.Limit == 2).Should().Be(3);
         tasks.Count(x => x.Result.Remaining == 0).Should().Be(3);
 

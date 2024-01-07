@@ -73,7 +73,15 @@ public static class RateLimiterConfigurationExtension
             //options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;        //Caso tenha limite de enfileiramente pego a msg mais velho  
             //options.QueueLimit = 0;                                                 //Não permite msg enfileirada.  Assim que a qts de msg passar de 10 será emitido erro.
             //options.AutoReplenishment = true;                                       //Propriedade responsável por fazer a liberação dos limit que já foram vencidos.  
-            options.ConnectionMultiplexerFactory = () => connectionMultiplexer;       
+            options.ConnectionMultiplexerFactory = () => connectionMultiplexer;
+        });
+
+        options.AddRedisConcurrencyLimiter("client2", options =>
+        {
+            options.PermitLimit = 10;
+            options.QueueLimit = 5;
+            options.TryDequeuePeriod = TimeSpan.FromSeconds(1);
+            options.ConnectionMultiplexerFactory = () => connectionMultiplexer;
         });
 
         options.OnRejected = (context, ct) => RateLimitMetadata.OnRejected(context.HttpContext, context.Lease, ct);

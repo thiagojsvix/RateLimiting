@@ -1,7 +1,10 @@
 ﻿using WebApi.Database;
 using WebApi.Extensions;
+using WebApi.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var serviceSettings = builder.Configuration.GetSection("ServiceSettings").Get<ServiceSettings>();
 
 //Adiciona contexto do banco de dados ao mecanismo de DI 
 builder.Services.AddDbContext<RateLimiteDbContext>();
@@ -12,6 +15,7 @@ builder.Services
     .AddSecurity()
     .AddRateLimiterConfig(builder.Configuration)
     .AddRateLimiter()
+    .AddConsulSettings(serviceSettings)
     ;
 
 // Add services to the container.
@@ -30,7 +34,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseConsul(serviceSettings);
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseRateLimiter();
@@ -42,8 +48,8 @@ using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<RateLimiteDbContext>();
 dbContext.Database.EnsureCreated();
 
-
-app.Run();
+//definindo porta que a aplicação ira escutar
+app.Run($"http://*:{serviceSettings.ServicePort}");
 
 // Hack: make the implicit Program class public so test projects can access it
 public partial class Program { }

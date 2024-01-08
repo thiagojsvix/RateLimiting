@@ -1,0 +1,113 @@
+{
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Scheme": "http",
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  },
+  "Routes": [
+    //Helth Check Status
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/HealthCheck/{value}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/HealthCheck/{value}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    //ClientsController
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/v1/clients/",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/clients/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
+      "Priority": 1,
+      "Key": "clients"
+    },
+
+    //Clients2Controller
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/v1/clients2/",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/clients2/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ]
+    },
+
+    //ConcurrencyController
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/v1/Concurrency/",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/Concurrency/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ]
+    },
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/v1/Concurrency/{value}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/Concurrency/{value}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ]
+    },
+
+    //FixedWindowController
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/v1/FixedWindow/",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/FixedWindow/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
+      "Priority": 1,
+      "Key": "fixedWindow"
+    },
+
+    //SlidingWindowController
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/v1/SlidingWindow/",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/SlidingWindow/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
+      "Priority": 1,
+      "Key": "slidingWindow"
+    },
+
+    //TokenBucketController
+    {
+      "ServiceName": "api-service",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "DownstreamPathTemplate": "/api/v1/TokenBucket/",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/TokenBucket/",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
+      "Priority": 1,
+      "Key": "tokenBucket"
+    }
+  ]
+}

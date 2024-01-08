@@ -1,8 +1,104 @@
 version: '3.8'
 services:
+  api-service1:
+    image: webapi:api-service
+    build:
+        context: ./src/webapi
+        dockerfile: Dockerfile 
+    container_name: api-service1
+    hostname: api-service1
+    networks:
+      - ratelimite-network 
+    environment:
+        - ServiceSettings__ServiceHost=api-service1
+        - ServiceSettings__ServicePort=9001
+    depends_on:
+      - api-gateway
+      - redis-cache
+    env_file:
+      - .env
+       
+  # api-service2:
+  #   image: webapi:api-service
+  #   build:
+  #       context: ./src/webapi
+  #       dockerfile: Dockerfile 
+  #   container_name: api-service2
+  #   hostname: api-service2
+  #   networks:
+  #     - ratelimite-network 
+  #   environment:
+  #       - ServiceSettings__ServiceHost=api-service2
+  #       - ServiceSettings__ServicePort=9002
+  #   depends_on:
+  #     - api-gateway
+  #     - redis-cache
+  #   env_file:
+  #     - .env
+        
+  # api-service3:
+  #   image: webapi:api-service
+  #   build:
+  #       context: ./src/webapi
+  #       dockerfile: Dockerfile 
+  #   container_name: api-service3
+  #   hostname: api-service3
+  #   networks:
+  #     - ratelimite-network 
+  #   environment:
+  #       - ServiceSettings__ServiceHost=api-service3
+  #       - ServiceSettings__ServicePort=9003
+  #   depends_on:
+  #     - api-gateway
+  #     - redis-cache
+  #   env_file:
+  #     - .env
+       
+  # api-service4:
+  #   image: webapi:api-service
+  #   build:
+  #       context: ./src/webapi
+  #       dockerfile: Dockerfile 
+  #   container_name: api-service4
+  #   hostname: api-service4
+  #   networks:
+  #     - ratelimite-network 
+  #   environment:
+  #       - ServiceSettings__ServiceHost=api-service4
+  #       - ServiceSettings__ServicePort=9004
+  #   depends_on:
+  #     - api-gateway
+  #     - redis-cache
+  #   env_file:
+  #     - .env
+ 
+  api-gateway:
+    image: ${Gateway__Name}
+    build:
+        context: ./src/ApiGateway
+        dockerfile: Dockerfile
+    container_name: ${Gateway__Name}
+    hostname: ${Gateway__Name}
+    ports:
+        - ${Gateway__Port}:${Gateway__Port}
+    networks:
+      - ratelimite-network
+    depends_on:
+      - consul
+
+  consul:
+    image: consul:1.15.4
+    restart: on-failure
+    container_name: ${Consul__HostName}
+    hostname: ${Consul__HostName}
+    ports:
+        - "8500:${Consul__Port}"
+    command: agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
+    networks:
+      - ratelimite-network
+
   redis-cache:
     image: redis:7.2.3
-    #image: redis:7.2.3-alpine
     restart: always
     ports:
       - '6379:6379'
@@ -11,6 +107,14 @@ services:
     hostname: redis-cache
     volumes: 
       - cache:/data
+    networks:
+      - ratelimite-network
+
 volumes:
   cache:
     driver: local
+
+networks:
+  ratelimite-network:
+    name: ratelimite-network
+    driver: bridge  

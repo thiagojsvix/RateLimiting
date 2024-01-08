@@ -11,7 +11,7 @@ namespace RedisRateLimiting.Tests.Basic;
 public class TokenBucketIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _httpClient;
-    private readonly string _apiPath = "/tokenbucket";
+    private readonly string _apiPath = "/api/v1/tokenbucket";
     private readonly Request _request;
 
     public TokenBucketIntegrationTests(WebApplicationFactory<Program> factory)

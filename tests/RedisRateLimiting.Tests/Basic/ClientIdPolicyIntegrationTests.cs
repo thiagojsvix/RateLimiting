@@ -14,7 +14,7 @@ public class ClientIdPolicyIntegrationTests : IClassFixture<WebApplicationFactor
 {
     private readonly HttpClient _httpClient;
     private readonly Request _request;
-    private readonly string _apiPath = "clients";
+    private readonly string _apiPath = "api/v1/clients";
 
     public ClientIdPolicyIntegrationTests(WebApplicationFactory<Program> factory)
     {

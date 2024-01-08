@@ -6,7 +6,7 @@ using WebApi.Model;
 namespace WebApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/v1/[controller]")]
 [EnableRateLimiting("demo_fixed_window")]
 public class FixedWindowController : ControllerBase
 {

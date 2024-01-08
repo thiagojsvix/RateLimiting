@@ -4,12 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\WebApi\WebApi.csproj", "{E7F90640-586D-4B7D-819F-DD92E1D3B817}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E597086F-B6A0-4BEC-9503-AA3A675666A4} = {E597086F-B6A0-4BEC-9503-AA3A675666A4}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ECFFB409-59CE-40BE-80EA-F0DEA49F98FD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A5BFD39D-950D-499A-892C-424CE4251BF2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.env = .env
 		.gitignore = .gitignore
 		docker-compose.yml = docker-compose.yml
 		global.json = global.json
@@ -21,6 +25,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2B5D1EBF-41F6-4D91-97F5-61ABF602D421}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisRateLimiting.Tests", "tests\RedisRateLimiting.Tests\RedisRateLimiting.Tests.csproj", "{6D0FC215-7B5A-423F-90C6-37420DC21E42}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "src\ApiGateway\ApiGateway.csproj", "{E597086F-B6A0-4BEC-9503-AA3A675666A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +42,10 @@ Global
 		{6D0FC215-7B5A-423F-90C6-37420DC21E42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D0FC215-7B5A-423F-90C6-37420DC21E42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D0FC215-7B5A-423F-90C6-37420DC21E42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E597086F-B6A0-4BEC-9503-AA3A675666A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E597086F-B6A0-4BEC-9503-AA3A675666A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E597086F-B6A0-4BEC-9503-AA3A675666A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E597086F-B6A0-4BEC-9503-AA3A675666A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +54,7 @@ Global
 		{E7F90640-586D-4B7D-819F-DD92E1D3B817} = {ECFFB409-59CE-40BE-80EA-F0DEA49F98FD}
 		{2FDC8848-3795-46E1-8528-65A153EB8675} = {A5BFD39D-950D-499A-892C-424CE4251BF2}
 		{6D0FC215-7B5A-423F-90C6-37420DC21E42} = {2B5D1EBF-41F6-4D91-97F5-61ABF602D421}
+		{E597086F-B6A0-4BEC-9503-AA3A675666A4} = {ECFFB409-59CE-40BE-80EA-F0DEA49F98FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {920F35F6-7405-493B-9F48-987EB9C9CDE3}

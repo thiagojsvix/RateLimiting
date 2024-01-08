@@ -13,8 +13,8 @@ public class ConcurrencyIntegrationTests : IClassFixture<WebApplicationFactory<P
 {
     private readonly HttpClient _httpClient;
     private readonly Request _request;
-    private readonly string _apiPath = "/concurrency";
-    private readonly string _apiPathQueue = "/concurrency/queue";
+    private readonly string _apiPath = "/api/v1/concurrency";
+    private readonly string _apiPathQueue = "/api/v1/concurrency/queue";
 
     public ConcurrencyIntegrationTests(WebApplicationFactory<Program> factory)
     {

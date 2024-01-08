@@ -12,7 +12,7 @@ public class FixedWindowIntegrationTests : IClassFixture<WebApplicationFactory<P
 {
     private readonly Request _request;
     private readonly HttpClient _httpClient;
-    private readonly string _apiPath = "/fixedwindow";
+    private readonly string _apiPath = "/api/v1/fixedwindow";
 
     public FixedWindowIntegrationTests(WebApplicationFactory<Program> factory)
     {

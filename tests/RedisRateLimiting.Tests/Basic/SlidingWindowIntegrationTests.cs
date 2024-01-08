@@ -12,7 +12,7 @@ public partial class SlidingWindowIntegrationTests : IClassFixture<WebApplicatio
 {
     private readonly Request _request;
     private readonly HttpClient _httpClient;
-    private readonly string _apiPath = "/SlidingWindow";
+    private readonly string _apiPath = "/api/v1/SlidingWindow";
 
     public SlidingWindowIntegrationTests(WebApplicationFactory<Program> factory)
     {

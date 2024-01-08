@@ -56,7 +56,6 @@ public static class RedisExtension
     {
         var certificate = GetCertificateFromThubprint();
 
-
         if (certificate == null)
         {
             return new X509Certificate2("redis.pfx", "redis-certificado-senha"); // use the password you specified for pfx file
